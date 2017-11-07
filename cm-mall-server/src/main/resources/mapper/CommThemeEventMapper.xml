@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaobaidu.mall.dao.CommThemeEventMapper">
+  <resultMap id="BaseResultMap" type="com.xiaobaidu.mall.entity.CommThemeEvent">
+
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="comm_type" jdbcType="VARCHAR" property="commType" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <collection property="detailList"  column="id" select="selectDetailByEventId" />
+  </resultMap>
+
+  <resultMap id="CommThemeEventDetailResult" type="com.xiaobaidu.mall.entity.CommThemeEventDetail">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="event_id" jdbcType="VARCHAR" property="eventId" />
+    <result column="relate_comm_code" jdbcType="VARCHAR" property="relateCommodity.code" />
+    <result column="theme_sell_price" jdbcType="VARCHAR" property="themeSellPrice" />
+
+  </resultMap>
+  <select id="selectDetailByEventId" resultMap="CommThemeEventDetailResult">
+
+    SELECT id,event_id,relate_comm_code,theme_sell_price from comm_theme_event_detail
+      where event_id = #{id,jdbcType=VARCHAR} and enable = 1  ORDER BY pos
+
+  </select>
+
+  <select id="getListByCommTypeId" resultMap="BaseResultMap">
+
+    SELECT id,comm_type,name,image from comm_theme_event
+      where comm_type = #{commTypeId,jdbcType=VARCHAR}
+        and status = 1
+        and start_time &lt; now()
+        and end_time &gt; now()
+      order by pos limit 0,2
+
+
+  </select>
+
+
+</mapper>

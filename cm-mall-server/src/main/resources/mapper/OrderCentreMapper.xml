@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaobaidu.mall.dao.OrderCentreMapper">
+  <resultMap id="BaseResultMap" type="com.xiaobaidu.mall.entity.OrderCentre">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="address_id" jdbcType="VARCHAR" property="addressId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="VoResultMap" type="com.xiaobaidu.mall.vo.OrderVo">
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <association property="address"  column="address_id" select="selectByAddressId" />
+    <collection property="detailVoList" column="id" select="selectDetailByOrderId" />
+  </resultMap>
+
+  <resultMap id="orderDetailVo" type="com.xiaobaidu.mall.vo.OrderDetailVo">
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="comm_count" jdbcType="INTEGER" property="commCount" />
+    <result column="comm_sell_price" jdbcType="DECIMAL" property="commSellPrice" />
+    <association property="commodity"  column="comm_code" select="selectCommodityByCommCode" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+    delete from order_centre
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xiaobaidu.mall.entity.OrderCentre">
+
+    insert into order_centre (id, address_id, user_id, 
+      user_nick_name, order_time, status, 
+      remark, creator, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{addressId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userNickName,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xiaobaidu.mall.entity.OrderCentre">
+
+    update order_centre
+    set address_id = #{addressId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+    select id, address_id, user_id, user_nick_name, order_time, status, remark, creator, 
+    create_time, update_time
+    from order_centre
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+
+    select id, address_id, user_id, user_nick_name, order_time, status, remark, creator, 
+    create_time, update_time
+    from order_centre
+  </select>
+  <select id="queryByMixDate" resultType="com.xiaobaidu.mall.entity.OrderCentre">
+
+    select id, address_id, user_id, user_nick_name, order_time, status, remark, creator,
+    create_time, update_time
+    from order_centre WHERE user_id = #{userId,jdbcType=VARCHAR} and order_time &gt; mixDate
+  </select>
+
+  <select id="selectByAddressId" resultType="com.xiaobaidu.mall.entity.Address">
+    select id, user_id, user_nick_name, phone, receiver, province, city, area, address, postcode, default_address
+    from address WHERE id = #{address.id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectDetailByOrderId" resultMap="orderDetailVo">
+    select order_id, comm_count, comm_sell_price
+    from order_detail WHERE order_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCommodityByCommCode" resultType="com.xiaobaidu.mall.entity.Commodity">
+    select code,name,price,introduce
+    from commdity WHERE order_id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

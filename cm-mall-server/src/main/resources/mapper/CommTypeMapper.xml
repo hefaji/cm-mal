@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaobaidu.mall.dao.CommTypeMapper">
+  <resultMap id="BaseResultMap" type="com.xiaobaidu.mall.entity.CommType">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hot" jdbcType="INTEGER" property="hot" />
+    <result column="pos" jdbcType="INTEGER" property="pos" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <association property="parent"  column="pid" select="findParentById" />
+    <collection property="children"  column="id" select="findChildById" />
+  </resultMap>
+
+  <resultMap id="simpleResultMap" type="com.xiaobaidu.mall.entity.CommType">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hot" jdbcType="INTEGER" property="hot" />
+    <result column="pos" jdbcType="INTEGER" property="pos" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+  </resultMap>
+
+
+  <select id="findHotType" resultMap="BaseResultMap">
+
+    select id, pid, name, hot, image
+    from comm_type WHERE hot=1
+  </select>
+
+  <select id="findChildById" resultMap="simpleResultMap">
+
+    SELECT id,pid,name,hot,pos,image from comm_type where pid = #{id,jdbcType=VARCHAR} ORDER BY pos
+
+  </select>
+
+  <select id="findParentById" resultMap="simpleResultMap">
+
+    SELECT id,pid,name,hot,pos,image from comm_type where id = #{pid,jdbcType=VARCHAR}
+
+  </select>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+
+    SELECT id,pid,name,hot,pos,image from comm_type where pid=0 ORDER BY pos
+
+  </select>
+</mapper>
