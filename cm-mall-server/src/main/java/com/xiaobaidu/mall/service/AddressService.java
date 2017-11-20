@@ -21,5 +21,5 @@ public interface AddressService {
      */
     ResponseVo setDefault(String id, String userId);
 
-
+    ResponseVo queryByUserId(String userId);
 }

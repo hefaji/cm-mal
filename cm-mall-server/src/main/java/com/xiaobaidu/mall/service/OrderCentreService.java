@@ -30,5 +30,6 @@ public interface OrderCentreService {
     ResponseVo<List<OrderVo>> queryOrderList(String userId,String queryCycle);
 
 
+    ResponseVo<OrderVo> queryOrderById(String id );
 
 }

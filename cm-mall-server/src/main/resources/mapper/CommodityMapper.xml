@@ -111,7 +111,7 @@
     LEFT JOIN comm_images image on comm.code = image.comm_code
     LEFT JOIN comm_type type on comm.type_id = type.id
     LEFT JOIN (SELECT comm_code , SUM(count) as stock from comm_stock GROUP BY comm_code) s on s.comm_code = comm.code
-    where comm.type_id=#{typeId,jdbcType=VARCHAR} and comm.hot_sell=0 AND enable=1 ORDER by pos ASC
+    where comm.type_id=#{typeId,jdbcType=VARCHAR} and comm.hot_sell=0 AND enable=1 ORDER by comm.pos ASC
   </select>
 
   <select id="getCommodityByCode" parameterType="java.lang.String" resultMap="BaseResultMap">

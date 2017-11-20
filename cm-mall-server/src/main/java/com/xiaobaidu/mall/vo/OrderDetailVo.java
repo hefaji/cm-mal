@@ -4,6 +4,7 @@ import com.xiaobaidu.mall.entity.Address;
 import com.xiaobaidu.mall.entity.Commodity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author hefaji
@@ -15,19 +16,16 @@ public class OrderDetailVo implements Serializable {
 
     private Commodity commodity;
 
-    private String commName;
+    private Integer commCount;
 
-    private int commCount;
+    private BigDecimal commSellPrice;
 
-    private double commSellPrice;
-
-    public OrderDetailVo(String orderId, String commCode, String commName, int commCount, double commSellPrice) {
+    public OrderDetailVo(String orderId,  Integer commCount, BigDecimal commSellPrice,String commCode) {
         this.orderId = orderId;
-        this.commName = commName;
         this.commCount = commCount;
         this.commSellPrice = commSellPrice;
-    }
 
+    }
     public String getOrderId() {
         return orderId;
     }
@@ -44,27 +42,20 @@ public class OrderDetailVo implements Serializable {
         this.commodity = commodity;
     }
 
-    public String getCommName() {
-        return commName;
-    }
-
-    public void setCommName(String commName) {
-        this.commName = commName;
-    }
-
-    public int getCommCount() {
+    public Integer getCommCount() {
         return commCount;
     }
 
-    public void setCommCount(int commCount) {
+    public void setCommCount(Integer commCount) {
         this.commCount = commCount;
     }
 
-    public double getCommSellPrice() {
+    public BigDecimal getCommSellPrice() {
         return commSellPrice;
     }
 
-    public void setCommSellPrice(double commSellPrice) {
+    public void setCommSellPrice(BigDecimal commSellPrice) {
         this.commSellPrice = commSellPrice;
     }
+
 }

@@ -7,7 +7,7 @@
     <result column="hot" jdbcType="INTEGER" property="hot" />
     <result column="pos" jdbcType="INTEGER" property="pos" />
     <result column="image" jdbcType="VARCHAR" property="image" />
-    <association property="parent"  column="pid" select="findParentById" />
+    <association property="parent"  column="parent_id" select="findParentById" />
     <collection property="children"  column="id" select="findChildById" />
   </resultMap>
 
@@ -22,25 +22,25 @@
 
   <select id="findHotType" resultMap="BaseResultMap">
 
-    select id, pid, name, hot, image
+    select id, parent_id, name, hot, image
     from comm_type WHERE hot=1
   </select>
 
   <select id="findChildById" resultMap="simpleResultMap">
 
-    SELECT id,pid,name,hot,pos,image from comm_type where pid = #{id,jdbcType=VARCHAR} ORDER BY pos
+    SELECT id,parent_id ,name,hot,pos,image from comm_type where parent_id = #{id,jdbcType=VARCHAR} ORDER BY pos
 
   </select>
 
   <select id="findParentById" resultMap="simpleResultMap">
 
-    SELECT id,pid,name,hot,pos,image from comm_type where id = #{pid,jdbcType=VARCHAR}
+    SELECT id,parent_id ,name,hot,pos,image from comm_type where id = #{parent.id,jdbcType=VARCHAR}
 
   </select>
   
   <select id="findAll" resultMap="BaseResultMap">
 
-    SELECT id,pid,name,hot,pos,image from comm_type where pid=0 ORDER BY pos
+    SELECT id,parent_id ,name,hot,pos,image from comm_type where pid=0 ORDER BY pos
 
   </select>
 </mapper>

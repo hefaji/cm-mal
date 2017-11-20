@@ -9,4 +9,8 @@ public interface CommTypeMapper extends IQuery {
     List<CommType> findHotType();
     //获取所有一级分类，及分类下的子分类
     List<CommType> findAll();
+
+    List<CommType> findChildById(String id);
+
+    CommType findParentById(String id);
 }

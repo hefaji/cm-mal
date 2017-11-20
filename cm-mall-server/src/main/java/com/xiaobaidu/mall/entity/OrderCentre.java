@@ -1,14 +1,13 @@
 package com.xiaobaidu.mall.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.Date;
 
 public class OrderCentre {
 
     private String id;
-
-
     private String addressId;
-
     private String userId;
 
     private String userNickName;

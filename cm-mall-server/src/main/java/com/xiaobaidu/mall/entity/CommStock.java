@@ -8,6 +8,8 @@ public class CommStock {
 
     private String commCode;
 
+    private String commName;
+
     private Integer count;
 
     private String remark;
@@ -82,5 +84,13 @@ public class CommStock {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getCommName() {
+        return commName;
+    }
+
+    public void setCommName(String commName) {
+        this.commName = commName;
     }
 }

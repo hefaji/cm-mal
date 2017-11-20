@@ -45,6 +45,12 @@
             <version>1.0.18</version>
         </dependency>
 
+        <!--aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!-- mybatis 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>

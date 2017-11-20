@@ -4,7 +4,6 @@ import com.xiaobaidu.mall.entity.Banner;
 import com.xiaobaidu.mall.vo.ResponseVo;
 
 import java.util.List;
-import java.util.PrimitiveIterator;
 
 /**
  * @author hefaji

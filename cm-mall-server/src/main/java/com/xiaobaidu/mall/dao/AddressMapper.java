@@ -21,4 +21,6 @@ public interface AddressMapper extends IQuery {
 
     void setDefaultAddress(String id);
 
+    List<Address> queryByUserId(String userId);
+
 }

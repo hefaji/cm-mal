@@ -1,7 +1,9 @@
 package com.xiaobaidu.mall.dao;
 
 import com.xiaobaidu.mall.entity.OrderCentre;
+import com.xiaobaidu.mall.vo.OrderVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -16,5 +18,7 @@ public interface OrderCentreMapper extends IQuery {
 
     int updateByPrimaryKey(OrderCentre record);
 
-    List<OrderCentre> queryByMixDate(String userId,Date mixDate);
+    List<OrderVo> queryByMixDate(@Param("userId") String userId, @Param("mixDate") Date mixDate);
+
+    OrderVo queryById(String id);
 }

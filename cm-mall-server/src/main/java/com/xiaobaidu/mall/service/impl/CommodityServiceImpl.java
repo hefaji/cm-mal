@@ -1,6 +1,5 @@
 package com.xiaobaidu.mall.service.impl;
 
-import com.xiaobaidu.mall.dao.CommStockMapper;
 import com.xiaobaidu.mall.dao.CommThemeEventMapper;
 import com.xiaobaidu.mall.dao.CommTypeMapper;
 import com.xiaobaidu.mall.dao.CommodityMapper;
@@ -8,15 +7,19 @@ import com.xiaobaidu.mall.entity.CommThemeEvent;
 import com.xiaobaidu.mall.entity.CommThemeEventDetail;
 import com.xiaobaidu.mall.entity.CommType;
 import com.xiaobaidu.mall.entity.Commodity;
-import com.xiaobaidu.mall.eumns.ResponseCode;
+import com.xiaobaidu.mall.exception.BaseCode;
 import com.xiaobaidu.mall.service.CommodityService;
 import com.xiaobaidu.mall.util.CollectionUtils;
+import com.xiaobaidu.mall.util.JsonUtils;
 import com.xiaobaidu.mall.vo.CommTypeVo;
 import com.xiaobaidu.mall.vo.ResponseVo;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author hefaji
@@ -24,6 +27,8 @@ import java.util.List;
  **/
 @Service
 public class CommodityServiceImpl implements CommodityService {
+
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private CommTypeMapper commTypeMapper;
@@ -34,17 +39,16 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private CommThemeEventMapper commThemeEventMapper;
 
-    @Autowired
-    private CommStockMapper commStockMapper;
-
     @Override
     public ResponseVo<List<CommType>> getHotCommType() {
         ResponseVo vo = ResponseVo.SUCCESS();
         try {
-            vo.setData(commTypeMapper.findHotType());
+            List<CommType> hotTypes = commTypeMapper.findHotType();
+            vo.setData(hotTypes);
         }catch (Exception e){
-            vo.setCode(ResponseCode.DB_ERROR);
+            vo.setCode(BaseCode.DB_ERROR);
             vo.setMsg("系统异常");
+            logger.error("系统异常e:"+e);
         }
         return vo;
     }
@@ -53,10 +57,15 @@ public class CommodityServiceImpl implements CommodityService {
     public ResponseVo<List<Commodity>> getByTypeId(String typeId) {
         ResponseVo vo = ResponseVo.SUCCESS();
         try {
+            if(StringUtils.isEmpty(typeId)){
+                vo.setCode(BaseCode.PARAM_ILLEGAL);
+                vo.setMsg("参数异常：商品类型为空");
+            }
             vo.setData(commodityMapper.getByTypeId(typeId));
         }catch (Exception e){
-            vo.setCode(ResponseCode.DB_ERROR);
+            vo.setCode(BaseCode.DB_ERROR);
             vo.setMsg("系统异常");
+            logger.error("系统异常e:"+e);
         }
         return vo;
     }
@@ -67,8 +76,9 @@ public class CommodityServiceImpl implements CommodityService {
         try {
             vo.setData( commTypeMapper.findAll());
         }catch (Exception e){
-            vo.setCode(ResponseCode.DB_ERROR);
+            vo.setCode(BaseCode.DB_ERROR);
             vo.setMsg("系统异常");
+            logger.error("系统异常e:"+e);
         }
         return vo;
     }
@@ -79,8 +89,9 @@ public class CommodityServiceImpl implements CommodityService {
         try {
             vo.setData( commodityMapper.getHotCommodity());
         }catch (Exception e){
-            vo.setCode(ResponseCode.DB_ERROR);
+            vo.setCode(BaseCode.DB_ERROR);
             vo.setMsg("系统异常");
+            logger.error("系统异常e:"+e);
         }
         return vo;
     }
@@ -90,6 +101,10 @@ public class CommodityServiceImpl implements CommodityService {
 
         ResponseVo respVo = ResponseVo.SUCCESS();
         try {
+            if(StringUtils.isEmpty(typeId)){
+                respVo.setCode(BaseCode.PARAM_ILLEGAL);
+                respVo.setMsg("参数异常：商品类型为空");
+            }
             CommTypeVo vo = new CommTypeVo();
             //分类下的热销
             List<Commodity> commodityHotList = commodityMapper.getHotSellByTypeId(typeId);
@@ -112,8 +127,9 @@ public class CommodityServiceImpl implements CommodityService {
 
             respVo.setData(vo);
         }catch (Exception e){
-            respVo.setCode(ResponseCode.FAILURE);
+            respVo.setCode(BaseCode.SYSTEM_ERROR);
             respVo.setMsg("系统异常");
+            logger.error("系统异常e:"+e);
         }
         return respVo;
 

@@ -1,12 +1,17 @@
-package transactional;
+package com.xiaobaidu.mall.service.impl;
 
 import com.xiaobaidu.mall.dao.*;
 import com.xiaobaidu.mall.entity.*;
+import com.xiaobaidu.mall.exception.BaseCode;
+import com.xiaobaidu.mall.exception.BusinessException;
 import com.xiaobaidu.mall.util.CollectionUtils;
 import com.xiaobaidu.mall.util.UUIDUtils;
 import com.xiaobaidu.mall.vo.OrderDetailReq;
 import com.xiaobaidu.mall.vo.OrderReq;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -14,6 +19,7 @@ import java.util.Date;
  * @author hefaji
  * @create 2017-10-13 18:07
  **/
+@Component
 public class OrderCenterTransaction {
 
     @Autowired
@@ -31,6 +37,7 @@ public class OrderCenterTransaction {
     @Autowired
     private OrderDetailMapper orderDetailMapper;
 
+    @Transactional
     public boolean joinOrder(OrderReq orderReq) {
 
         if (null != orderReq && !CollectionUtils.isEmpty(orderReq.getOrderDetailList())) {
@@ -38,7 +45,8 @@ public class OrderCenterTransaction {
                 //根据商品id获取库存
                 CommStock commStock = commStockMapper.selectByCommCode(detail.getCommCode());
                 if (null == commStock || commStock.getCount() < detail.getCommCount()) {
-                    return false;
+                    throw new BusinessException(BaseCode.INVALID_REQUEST, commStock.getCommName()+"：库存不足,请您选择其他商品");
+
                 }
 
                 commStock.setCount(commStock.getCount() - detail.getCommCount());
@@ -46,7 +54,8 @@ public class OrderCenterTransaction {
                 //插入商品库存
                 int updateCount = commStockMapper.uploadByVersion(commStock);
                 if (updateCount <= 0) {
-                    return false;
+                    throw new BusinessException(BaseCode.INVALID_REQUEST, commStock.getCommName()+"：库存不足,请选择其他商品");
+
                 }
 
                 //插入库存明细
@@ -76,7 +85,8 @@ public class OrderCenterTransaction {
                 //根据商品编码，获取当前售价
                 Commodity commodity = commodityMapper.getCommodityByCode(detail.getCommCode());
                 if(null == commodity){
-                    return  false;
+                    throw new BusinessException(BaseCode.SYSTEM_ERROR, "获取购买商品信息异常，请稍后再试");
+
                 }
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setCommCode(detail.getCommCode());

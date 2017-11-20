@@ -70,7 +70,12 @@
     postcode, default_address, creator, create_time, update_time
     from address
   </select>
-  <update id="removeDefaultAddress" parameterType="java.lang.String">
+    <select id="queryByUserId" resultMap="BaseResultMap">
+       select id, user_id, user_nick_name, phone, receiver, province, city, area, address,
+    postcode, default_address, creator, create_time, update_time
+    from address WHERE user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    <update id="removeDefaultAddress" parameterType="java.lang.String">
     update address
     set   default_address = 0,
     where user_id = #{userId,jdbcType=VARCHAR}

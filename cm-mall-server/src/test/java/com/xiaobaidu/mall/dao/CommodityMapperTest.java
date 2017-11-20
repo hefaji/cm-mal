@@ -1,12 +1,12 @@
 package com.xiaobaidu.mall.dao;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.xiaobaidu.mall.entity.CommThemeEvent;
 import com.xiaobaidu.mall.entity.CommType;
 import com.xiaobaidu.mall.entity.Commodity;
 import com.xiaobaidu.mall.service.CommodityService;
 import com.xiaobaidu.mall.util.JsonUtils;
 import com.xiaobaidu.mall.vo.CommTypeVo;
+import com.xiaobaidu.mall.vo.ResponseVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class CommodityMapperTest {
 
     @Test
     public void  testCommTypeVoByCommType(){
-        CommTypeVo commTypeVo = commodityService.getCommTypeVoByCommType("2");
+        ResponseVo<CommTypeVo> commTypeVo = commodityService.getCommTypeVoByCommType("2");
         System.out.println("result----------"+JsonUtils.object2String(commTypeVo));
     }
 

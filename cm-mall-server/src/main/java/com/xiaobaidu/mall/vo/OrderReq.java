@@ -1,5 +1,8 @@
 package com.xiaobaidu.mall.vo;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,10 +11,14 @@ import java.util.List;
  * @create 2017-09-21 18:47
  **/
 public class OrderReq implements Serializable {
+    @NotBlank(message="用户地址不能为空")
     private String addressId;
+
+    @NotBlank(message="用户Id不能为空")
     private String userId;
     private String userNickName;
 
+    @NotNull(message="商品不能为空")
     private List<OrderDetailReq> orderDetailList;
 
     public String getAddressId() {

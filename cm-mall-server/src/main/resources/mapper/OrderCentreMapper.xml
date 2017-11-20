@@ -73,25 +73,30 @@
     create_time, update_time
     from order_centre
   </select>
-  <select id="queryByMixDate" resultType="com.xiaobaidu.mall.entity.OrderCentre">
+  <select id="queryByMixDate" resultMap="VoResultMap">
 
     select id, address_id, user_id, user_nick_name, order_time, status, remark, creator,
     create_time, update_time
-    from order_centre WHERE user_id = #{userId,jdbcType=VARCHAR} and order_time &gt; mixDate
+    from order_centre WHERE user_id = #{userId,jdbcType=VARCHAR} and order_time &gt; #{mixDate,jdbcType=TIMESTAMP}
   </select>
 
   <select id="selectByAddressId" resultType="com.xiaobaidu.mall.entity.Address">
     select id, user_id, user_nick_name, phone, receiver, province, city, area, address, postcode, default_address
-    from address WHERE id = #{address.id,jdbcType=VARCHAR}
+    from address WHERE id = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="selectDetailByOrderId" resultMap="orderDetailVo">
-    select order_id, comm_count, comm_sell_price
+    select order_id, comm_count, comm_sell_price,comm_code
     from order_detail WHERE order_id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="selectCommodityByCommCode" resultType="com.xiaobaidu.mall.entity.Commodity">
     select code,name,price,introduce
-    from commdity WHERE order_id = #{id,jdbcType=VARCHAR}
+    from commodity WHERE code = #{commodty.code,jdbcType=VARCHAR}
+  </select>
+  <select id="queryById" resultMap="VoResultMap">
+    select id, address_id, user_id, user_nick_name, order_time, status, remark, creator,
+    create_time, update_time
+    from order_centre WHERE id = #{id,jdbcType=VARCHAR}
   </select>
 
 
