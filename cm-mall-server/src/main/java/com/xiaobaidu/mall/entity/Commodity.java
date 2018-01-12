@@ -34,19 +34,28 @@ public class Commodity implements Serializable {
     private int hotSell;
 
     //商品分类
-    private CommType commType;
+    private String typeName;
+    private String typeId;
 
     //商品介绍
     private String introduce;
 
-    //商品图片
-    private CommImages images;
+    private String bigImage;
+
+    private String middleImage;
+
+    private String smallImage;
+
+    private String icon;
 
     //是否启用
     private Integer enable;
 
     //库存
     private Integer stock;
+
+    //销量
+    private Integer sellCount;
 
     public String getId() {
         return id;
@@ -96,30 +105,6 @@ public class Commodity implements Serializable {
         this.priceUnit = priceUnit;
     }
 
-    public CommType getCommType() {
-        return commType;
-    }
-
-    public void setCommType(CommType commType) {
-        this.commType = commType;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public CommImages getImages() {
-        return images;
-    }
-
-    public void setImages(CommImages images) {
-        this.images = images;
-    }
-
     public int getHot() {
         return hot;
     }
@@ -136,6 +121,62 @@ public class Commodity implements Serializable {
         this.hotSell = hotSell;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getBigImage() {
+        return bigImage;
+    }
+
+    public void setBigImage(String bigImage) {
+        this.bigImage = bigImage;
+    }
+
+    public String getMiddleImage() {
+        return middleImage;
+    }
+
+    public void setMiddleImage(String middleImage) {
+        this.middleImage = middleImage;
+    }
+
+    public String getSmallImage() {
+        return smallImage;
+    }
+
+    public void setSmallImage(String smallImage) {
+        this.smallImage = smallImage;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public Integer getEnable() {
         return enable;
     }
@@ -150,5 +191,13 @@ public class Commodity implements Serializable {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getSellCount() {
+        return sellCount;
+    }
+
+    public void setSellCount(Integer sellCount) {
+        this.sellCount = sellCount;
     }
 }

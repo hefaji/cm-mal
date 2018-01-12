@@ -13,4 +13,6 @@ public interface CommTypeMapper extends IQuery {
     List<CommType> findChildById(String id);
 
     CommType findParentById(String id);
+
+    List<CommType> findHotChildrenTypeById(String id );
 }

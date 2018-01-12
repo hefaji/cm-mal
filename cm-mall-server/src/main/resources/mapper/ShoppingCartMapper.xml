@@ -71,7 +71,7 @@
 
     select id, user_id, comm_code, comm_count, comm_sell_price, creator, create_time,
     update_time
-    from shopping_cart where id = #{id,jdbcType=VARCHAR}
+    from shopping_cart where user_id = #{id,jdbcType=VARCHAR}
   </select>
 
 </mapper>

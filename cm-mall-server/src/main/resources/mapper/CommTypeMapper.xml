@@ -19,11 +19,11 @@
     <result column="image" jdbcType="VARCHAR" property="image" />
   </resultMap>
 
-
-  <select id="findHotType" resultMap="BaseResultMap">
+<!--首页热门分类-->
+  <select id="findHotType" resultMap="simpleResultMap">
 
     select id, parent_id, name, hot, image
-    from comm_type WHERE hot=1
+    from comm_type WHERE hot=1 and parent_id = '0' ORDER by pos
   </select>
 
   <select id="findChildById" resultMap="simpleResultMap">
@@ -37,10 +37,16 @@
     SELECT id,parent_id ,name,hot,pos,image from comm_type where id = #{parent.id,jdbcType=VARCHAR}
 
   </select>
-  
+
   <select id="findAll" resultMap="BaseResultMap">
 
     SELECT id,parent_id ,name,hot,pos,image from comm_type where pid=0 ORDER BY pos
 
+  </select>
+
+  <select id="findHotChildrenTypeById" resultMap="simpleResultMap">
+
+    select id, parent_id, name, hot, image
+    from comm_type WHERE hot=1 and parent_id = #{id,jdbcType=VARCHAR} and hot = 1 ORDER by pos
   </select>
 </mapper>

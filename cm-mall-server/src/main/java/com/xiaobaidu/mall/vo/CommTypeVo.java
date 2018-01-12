@@ -18,6 +18,12 @@ public class CommTypeVo implements Serializable {
 
     //分类id
     private String typeId;
+
+    private String typeName;
+
+    private String image;
+
+    private boolean isCurrt = false;
     //热销
     private List<Commodity> hotCommodityList;
 
@@ -68,5 +74,29 @@ public class CommTypeVo implements Serializable {
 
     public void setCommThemeEventSecond(CommThemeEvent commThemeEventSecond) {
         this.commThemeEventSecond = commThemeEventSecond;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public boolean getIsCurrt() {
+        return isCurrt;
+    }
+
+    public void setIsCurrt(boolean currt) {
+        isCurrt = currt;
     }
 }

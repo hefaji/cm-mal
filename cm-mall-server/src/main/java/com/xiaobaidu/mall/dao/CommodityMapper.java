@@ -39,6 +39,9 @@ public interface CommodityMapper extends IQuery {
      */
     Commodity getCommodityByCode (String code);
 
+
+    Commodity getCommodityById (String Id);
+
     /**
      * 通过关键字搜索商品，搜索范围，商品名称，类型名称，商品描述
      * @return

@@ -47,6 +47,25 @@ public interface CommodityService {
     ResponseVo<CommTypeVo> getCommTypeVoByCommType(String typeId);
 
 
+    /**
+     * 获取分类下的子分类，
+     * @param typeId
+     * @return
+     */
+    ResponseVo<List<CommTypeVo>> getCommTypeVosByParentId(String typeId,String subTypeId);
+
+    /**
+     * 获取商品详情
+     * @param id
+     * @return
+     */
+    ResponseVo<Commodity> getCommodityById(String id);
+    /**
+     * 获取商品详情
+     * @param id
+     * @return
+     */
+    ResponseVo<Commodity> getCommodityByCode(String code);
 
 
 }

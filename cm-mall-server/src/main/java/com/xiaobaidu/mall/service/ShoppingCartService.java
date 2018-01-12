@@ -1,6 +1,7 @@
 package com.xiaobaidu.mall.service;
 
 import com.xiaobaidu.mall.entity.ShoppingCart;
+import com.xiaobaidu.mall.vo.CartVo;
 import com.xiaobaidu.mall.vo.ResponseVo;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface ShoppingCartService {
 
     ResponseVo update(ShoppingCart entity);
 
-    ResponseVo<List<ShoppingCart>> selectByUserId(String userId);
+    ResponseVo<CartVo> selectByUserId(String userId);
 
 }

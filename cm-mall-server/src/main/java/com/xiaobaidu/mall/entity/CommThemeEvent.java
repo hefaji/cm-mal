@@ -1,5 +1,7 @@
 package com.xiaobaidu.mall.entity;
 
+import com.xiaobaidu.mall.util.CollectionUtils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +21,13 @@ public class CommThemeEvent {
 
     private Date endTime;
 
+    /**
+     * 有多少商品
+     */
+    private int count;
+
     //明细
-    private List<CommThemeEventDetail> detailList;
+    private List<CommThemeEventDetail> details;
 
     private Integer status;
 
@@ -82,12 +89,12 @@ public class CommThemeEvent {
         this.endTime = endTime;
     }
 
-    public List<CommThemeEventDetail> getDetailList() {
-        return detailList;
+    public List<CommThemeEventDetail> getDetails() {
+        return details;
     }
 
-    public void setDetailList(List<CommThemeEventDetail> detailList) {
-        this.detailList = detailList;
+    public void setDetails(List<CommThemeEventDetail> details) {
+        this.details = details;
     }
 
     public Integer getStatus() {
@@ -104,5 +111,17 @@ public class CommThemeEvent {
 
     public void setPos(Integer pos) {
         this.pos = pos;
+    }
+
+    public int getCount() {
+        if(CollectionUtils.isEmpty(details)){
+            return 0;
+        }else {
+            return details.size();
+        }
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

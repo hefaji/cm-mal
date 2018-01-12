@@ -2,6 +2,7 @@ package com.xiaobaidu.mall.web;
 
 import com.xiaobaidu.mall.entity.ShoppingCart;
 import com.xiaobaidu.mall.service.ShoppingCartService;
+import com.xiaobaidu.mall.vo.CartVo;
 import com.xiaobaidu.mall.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class ShoppingCartController extends  BaseController{
      */
     @RequestMapping(value = "/my")
     public String myShoppingCart(String userId){
-        ResponseVo<List<ShoppingCart>> responseVo = shoppingCartService.selectByUserId(userId);
+        ResponseVo<CartVo> responseVo = shoppingCartService.selectByUserId(userId);
         return buildResponse(responseVo);
     }
 
